@@ -1,0 +1,199 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package gui;
+
+import dao.AlunoDAO;
+import modelo.Aluno;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+/**
+ *
+ * @author Fatec
+ */
+public class GerenciarAlunosFrame extends javax.swing.JFrame {
+
+    private JPanel painelForm;
+    private JTextField campoCpf, campoNome, campoEmail, campoDataNasc;
+    
+    public GerenciarAlunosFrame() {
+        setTitle("Gerenciar Alunos");
+        setSize(500, 400);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        // Painel superior com botões principais
+        JPanel painelTopo = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 8));
+
+        JButton btnNovo      = new JButton("Novo Aluno");
+        JButton btnConsultar = new JButton("Consultar");
+        JButton btnEditar    = new JButton("Editar Alunos");
+        JButton btnVoltar    = new JButton("Voltar");
+
+        painelTopo.add(btnNovo);
+        painelTopo.add(btnConsultar);
+        painelTopo.add(btnEditar);
+        painelTopo.add(btnVoltar);
+        add(painelTopo, BorderLayout.NORTH);
+
+        // Painel de formulário (invisível inicialmente)
+        painelForm = new JPanel();
+        painelForm.setLayout(new GridLayout(6, 2, 5, 5));
+        painelForm.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        campoCpf = new JTextField();
+        campoNome = new JTextField();
+        campoEmail = new JTextField();
+        campoDataNasc = new JTextField();
+
+        painelForm.add(new JLabel("CPF:"));
+        painelForm.add(campoCpf);
+
+        painelForm.add(new JLabel("Nome:"));
+        painelForm.add(campoNome);
+
+        painelForm.add(new JLabel("Email:"));
+        painelForm.add(campoEmail);
+
+        painelForm.add(new JLabel("Data de Nascimento (dd/MM/yyyy):"));
+        painelForm.add(campoDataNasc);
+
+        JButton btnConfirmar = new JButton("Confirmar");
+        JButton btnCancelar = new JButton("Cancelar");
+
+        painelForm.add(btnConfirmar);
+        painelForm.add(btnCancelar);
+
+        painelForm.setVisible(false); // Oculta inicialmente
+        add(painelForm, BorderLayout.CENTER);
+
+        // Ação do botão "Novo Aluno"
+        btnNovo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                painelForm.setVisible(true);
+            }
+        });
+
+        // Ação do botão "Confirmar"
+        btnConfirmar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String cpf = campoCpf.getText().trim();
+                    String nome = campoNome.getText().trim();
+                    String email = campoEmail.getText().trim();
+                    String dataNasc = campoDataNasc.getText().trim();
+
+                    Aluno aluno = new Aluno(cpf, nome, email, dataNasc);
+                    AlunoDAO dao = new AlunoDAO();
+                    dao.createAluno(aluno);
+
+                    JOptionPane.showMessageDialog(null, "Aluno cadastrado com sucesso!");
+                    limparCampos();
+                    painelForm.setVisible(false);
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage(), "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        // Ação do botão "Cancelar"
+        btnCancelar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                limparCampos();
+                painelForm.setVisible(false);
+            }
+        });
+        
+        // Consultar
+        btnConsultar.addActionListener(e ->
+                new ConsultarAlunosFrame().setVisible(true));
+        
+        // Editar
+        btnEditar.addActionListener(e -> 
+                new EditarAlunosFrame().setVisible(true));
+
+        // Voltar
+        btnVoltar.addActionListener(e -> {
+            this.dispose();                 // fecha esta janela
+            new TelaInicial().setVisible(true); // retorna à tela inicial
+        });
+        
+    }
+
+    private void limparCampos() {
+        campoCpf.setText("");
+        campoNome.setText("");
+        campoEmail.setText("");
+        campoDataNasc.setText("");
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(GerenciarAlunosFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(GerenciarAlunosFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(GerenciarAlunosFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(GerenciarAlunosFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new GerenciarAlunosFrame().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // End of variables declaration//GEN-END:variables
+}
