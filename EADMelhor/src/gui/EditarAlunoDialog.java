@@ -9,27 +9,31 @@ import modelo.Aluno;
 
 import javax.swing.*;
 import java.awt.*;
+
 /**
  *
  * @author Fatec
  */
 public class EditarAlunoDialog extends JDialog {
 
-    private final JTextField txtNome  = new JTextField(20);
+    private final JTextField txtNome = new JTextField(20);
     private final JTextField txtEmail = new JTextField(20);
-    private final JTextField txtData  = new JTextField(10);
-    private final JCheckBox chkAtivo     = new JCheckBox("Ativo");
-    private final JCheckBox chkInativo   = new JCheckBox("Inativo");
+    private final JTextField txtData = new JTextField(10);
+    private final JCheckBox chkAtivo = new JCheckBox("Ativo");
+    private final JCheckBox chkInativo = new JCheckBox("Inativo");
     private boolean atualizado = false;
     private final Aluno aluno;
-    
-    
-    public EditarAlunoDialog(Frame owner, Aluno aluno) {
-        super(owner, "Editar Aluno", true);
+
+    private EditarAlunosFrame framePai;
+
+    public EditarAlunoDialog(EditarAlunosFrame framePai, Aluno aluno) {
+        super(framePai, "Editar Aluno", true);
+        this.framePai = framePai;
         this.aluno = aluno;
+        initComponents();
 
         setSize(400, 300);
-        setLocationRelativeTo(owner);
+        setLocationRelativeTo(framePai);
         setLayout(new BorderLayout(10, 10));
         JPanel form = new JPanel(new GridLayout(6, 2, 8, 8));
         form.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
@@ -93,21 +97,19 @@ public class EditarAlunoDialog extends JDialog {
                 aluno.setDataNascimento(txtData.getText().trim());
                 aluno.setAtivo(chkAtivo.isSelected());
 
-                new AlunoDAO().updateAluno(aluno);
-                JOptionPane.showMessageDialog(this, "Dados atualizados!");
-                atualizado = true;
+                AlunoDAO dao = new AlunoDAO();
+                dao.updateAluno(aluno);
+
+                JOptionPane.showMessageDialog(this, "Aluno atualizado com sucesso!");
+                framePai.carregarDados(false);  // Atualiza a tabela
                 dispose();
-            } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(),
-                        "Erro de Validação", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(),
-                        "Erro na Atualização", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro ao salvar: " + ex.getMessage());
             }
         });
 
         btnCancelar.addActionListener(e -> dispose());
-        
+
         btnExcluir.addActionListener(e -> {
             int opcao = JOptionPane.showConfirmDialog(this,
                     "Tem certeza que deseja excluir o aluno com CPF " + aluno.getCpf() + "?",
@@ -118,6 +120,7 @@ public class EditarAlunoDialog extends JDialog {
                     AlunoDAO dao = new AlunoDAO();
                     dao.deleteAluno(aluno.getCpf());
                     JOptionPane.showMessageDialog(this, "Aluno excluído com sucesso.");
+                    framePai.carregarDados(false);
                     dispose(); // fecha a janela de edição
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Erro ao excluir: " + ex.getMessage());
@@ -133,7 +136,6 @@ public class EditarAlunoDialog extends JDialog {
         return atualizado;
     }
 
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -142,8 +144,6 @@ public class EditarAlunoDialog extends JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,7 +162,6 @@ public class EditarAlunoDialog extends JDialog {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

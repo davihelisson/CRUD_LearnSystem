@@ -5,6 +5,7 @@
 package gui;
 
 import dao.AlunoDAO;
+import gui.TelaInicial;
 import modelo.Aluno;
 
 import javax.swing.*;
@@ -30,8 +31,8 @@ public class GerenciarAlunosFrame extends javax.swing.JFrame {
         // Painel superior com botões principais
         JPanel painelTopo = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 8));
 
-        JButton btnNovo      = new JButton("Novo Aluno");
-        JButton btnConsultar = new JButton("Consultar");
+        JButton btnNovo      = new JButton("Cadastrar Novo Aluno");
+        JButton btnConsultar = new JButton("Consultar Alunos");
         JButton btnEditar    = new JButton("Editar Alunos");
         JButton btnVoltar    = new JButton("Voltar");
 
@@ -122,7 +123,6 @@ public class GerenciarAlunosFrame extends javax.swing.JFrame {
         // Voltar
         btnVoltar.addActionListener(e -> {
             this.dispose();                 // fecha esta janela
-            new TelaInicial().setVisible(true); // retorna à tela inicial
         });
         
     }

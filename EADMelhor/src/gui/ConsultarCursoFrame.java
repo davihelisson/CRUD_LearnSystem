@@ -4,60 +4,17 @@
  */
 package gui;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 /**
  *
  * @author Fatec
  */
-public class TelaInicial extends javax.swing.JFrame {
+public class ConsultarCursoFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form TelaInicial
+     * Creates new form ConsultarCursoFrame
      */
-    public TelaInicial() {
-        setTitle("Sistema de Ensino - EAD Melhor");
-        setSize(700, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Centraliza a janela na tela
-
-        // Layout principal vertical
-        setLayout(new GridLayout(2, 1));
-
-        // Painel superior - Gerenciar Alunos
-        JPanel painelAlunos = new JPanel();
-        painelAlunos.setLayout(new FlowLayout());
-        JButton btnAlunos = new JButton("Gerenciar Alunos");
-        painelAlunos.add(btnAlunos);
-
-        // Painel inferior - Gerenciar Cursos
-        JPanel painelCursos = new JPanel();
-        painelCursos.setLayout(new FlowLayout());
-        JButton btnCursos = new JButton("Gerenciar Cursos");
-        painelCursos.add(btnCursos);
-
-        // Adiciona painéis à janela
-        add(painelAlunos);
-        add(painelCursos);
-
-        // Eventos dos botões
-        btnAlunos.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Aqui vai abrir a tela de gerenciamento de alunos
-                //JOptionPane.showMessageDialog(null, "Abrir tela de Gerenciamento de Alunos (ainda não implementada)");
-                new GerenciarAlunosFrame().setVisible(true);
-            }
-        });
-
-        btnCursos.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Aqui vai abrir a tela de gerenciamento de cursos
-                new GerenciarCursosFrame().setVisible(true);
-            }
-        });
+    public ConsultarCursoFrame() {
+        initComponents();
     }
 
     /**
@@ -102,24 +59,27 @@ public class TelaInicial extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConsultarCursoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConsultarCursoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConsultarCursoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConsultarCursoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaInicial().setVisible(true);
+                new ConsultarCursoFrame().setVisible(true);
             }
         });
     }
-}
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-
+}

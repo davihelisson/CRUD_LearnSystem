@@ -89,7 +89,7 @@ public class EditarAlunosFrame extends javax.swing.JFrame {
         return linha;
     }
 
-    private void carregarDados(boolean filtrar) {
+    protected void carregarDados(boolean filtrar) {
         String cpf  = txtCpf.getText().trim();
         String nome = txtNome.getText().trim();
 
