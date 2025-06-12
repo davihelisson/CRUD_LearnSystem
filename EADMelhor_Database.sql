@@ -12,10 +12,10 @@ CREATE TABLE alunos (
 
 CREATE TABLE Cursos (
     Codigo INT PRIMARY KEY,
-    NomeCurso VARCHAR(255) NOT NULL,
+    Nome VARCHAR(255) NOT NULL,
     CargaHoraria INT NOT NULL,
-    QuantidadeAlunos INT NOT NULL,
-    Status VARCHAR(50) NOT NULL
+    Status VARCHAR(50) NOT NULL, 
+    QuantidadeAlunos INT NOT NULL
 );
 
 
