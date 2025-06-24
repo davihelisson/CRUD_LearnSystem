@@ -83,7 +83,7 @@ Com chaves primárias, relacionamentos e integridade referencial por meio de `FO
 
 ## 👨‍💻 Autor
 
-Desenvolvido por [Seu Nome Aqui] como parte de um projeto de estudo e aprimoramento em Java, Orientação a Objetos e construção de aplicações GUI com Swing.
+Desenvolvido por [Davi Helisson] como parte de um projeto de estudo e aprimoramento em Java, Orientação a Objetos e construção de aplicações GUI com Swing.
 
 ---
 
