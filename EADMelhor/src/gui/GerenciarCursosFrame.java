@@ -30,9 +30,8 @@ public class GerenciarCursosFrame extends javax.swing.JFrame {
 
         JButton btnCadastrarCurso = new JButton("Cadastrar Novo Curso");
         JButton btnEditarCurso = new JButton("Editar Curso");
-        JButton btnConsultarCurso = new JButton("Consultar Curso");
-        JButton btnCadastrarAluno = new JButton("Cadastrar Aluno no Curso");
-        JButton btnVoltar    = new JButton("Voltar");
+        JButton btnEditarClasse = new JButton("Editar Classe");
+        JButton btnVoltar = new JButton("Voltar");
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -42,25 +41,16 @@ public class GerenciarCursosFrame extends javax.swing.JFrame {
         painel.add(btnEditarCurso, gbc);
 
         gbc.gridy = 2;
-        painel.add(btnConsultarCurso, gbc);
-        
+        painel.add(btnEditarClasse, gbc);
+
         gbc.gridy = 3;
-        painel.add(btnCadastrarAluno, gbc);
-        
-        gbc.gridy = 4;
         painel.add(btnVoltar, gbc);
 
         btnCadastrarCurso.addActionListener(this::abrirCadastrarCurso);
         btnEditarCurso.addActionListener(this::abrirEditarCurso);
-        btnConsultarCurso.addActionListener(this::abrirConsultarCurso);
-        btnCadastrarAluno.addActionListener(e -> abrirCadastroAluno());
+        btnEditarClasse.addActionListener(this::abrirEditarClasse);
+        btnVoltar.addActionListener(e -> this.dispose());
 
-        
-        btnVoltar.addActionListener(e -> {
-            this.dispose();                 // fecha esta janela
-        });
-        
-        
         add(painel);
     }
 
@@ -71,13 +61,9 @@ public class GerenciarCursosFrame extends javax.swing.JFrame {
     private void abrirEditarCurso(ActionEvent e) {
         new EditarCursoFrame().setVisible(true);
     }
-
-    private void abrirConsultarCurso(ActionEvent e) {
-        new ConsultarCursoFrame().setVisible(true);
-    }
-
-    private void abrirCadastroAluno() {
-        JOptionPane.showMessageDialog(this, "Abrir tela de cadastro de aluno (já existente ou redirecionar)");
+    
+    private void abrirEditarClasse(ActionEvent e) {
+        new EditarClasseFrame().setVisible(true);
     }
 
     /**

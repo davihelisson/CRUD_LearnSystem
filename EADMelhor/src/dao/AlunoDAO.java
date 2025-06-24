@@ -7,7 +7,6 @@ package dao;
 import modelo.Aluno;
 import factory.ConnectionFactory;
 import java.sql.*;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -177,9 +176,59 @@ public class AlunoDAO {
         al.setAtivo(rs.getBoolean("ativo"));
         return al;
     }
+    
+    public List<Aluno> listarAlunosInativos() {
+        List<Aluno> alunos = new ArrayList<>();
+        String sql = "SELECT * FROM alunos WHERE ativo = FALSE";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Aluno aluno = new Aluno(
+                    rs.getString("cpf"),
+                    rs.getString("nome"),
+                    rs.getString("email"),
+                    rs.getDate("data_nascimento").toLocalDate()
+                    .format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                );
+                alunos.add(aluno);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return alunos;
+    }
+
 
     private void carregarDados(boolean filtroAtivo) {
         // Lê os alunos do banco e atualiza a tabela
+    }
+    
+    public List<Aluno> listarAlunosAtivos() {
+        List<Aluno> alunos = new ArrayList<>();
+        String sql = "SELECT * FROM alunos WHERE ativo = true";
+        try (PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Aluno aluno = new Aluno(
+                    rs.getString("cpf"),
+                    rs.getString("nome"),
+                    rs.getString("email"),
+                    rs.getDate("data_nascimento")
+                        .toLocalDate()
+                        .format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                );
+                aluno.setAtivo(rs.getBoolean("ativo"));
+                alunos.add(aluno);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return alunos;
     }
 
 }

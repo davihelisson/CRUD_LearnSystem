@@ -9,39 +9,36 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- *
- * @author Fatec
- */
+
 public class TelaInicial extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaInicial
-     */
     public TelaInicial() {
         setTitle("Sistema de Ensino - EAD Melhor");
-        setSize(700, 300);
+        setSize(700, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Centraliza a janela na tela
+        setLocationRelativeTo(null); 
 
-        // Layout principal vertical
-        setLayout(new GridLayout(2, 1));
+        setLayout(new GridLayout(3, 1));
 
-        // Painel superior - Gerenciar Alunos
-        JPanel painelAlunos = new JPanel();
-        painelAlunos.setLayout(new FlowLayout());
+     // Painel superior - Gerenciar Alunos
+        JPanel painelAlunos = new JPanel(new FlowLayout());
         JButton btnAlunos = new JButton("Gerenciar Alunos");
         painelAlunos.add(btnAlunos);
 
-        // Painel inferior - Gerenciar Cursos
-        JPanel painelCursos = new JPanel();
-        painelCursos.setLayout(new FlowLayout());
+        // Painel do meio - Gerenciar Cursos
+        JPanel painelCursos = new JPanel(new FlowLayout());
         JButton btnCursos = new JButton("Gerenciar Cursos");
         painelCursos.add(btnCursos);
 
-        // Adiciona painéis à janela
+        // Painel inferior - Geração de Relatórios
+        JPanel painelRelatorios = new JPanel(new FlowLayout());
+        JButton btnRelatorios = new JButton("Geração de Relatórios");
+        painelRelatorios.add(btnRelatorios);
+
+     // Adiciona os painéis à janela
         add(painelAlunos);
         add(painelCursos);
+        add(painelRelatorios);
 
         // Eventos dos botões
         btnAlunos.addActionListener(new ActionListener() {
@@ -57,6 +54,12 @@ public class TelaInicial extends javax.swing.JFrame {
                 // Aqui vai abrir a tela de gerenciamento de cursos
                 new GerenciarCursosFrame().setVisible(true);
             }
+        });
+        
+        btnRelatorios.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent e) {
+        		new RelatorioFrame().setVisible(true);
+        	}
         });
     }
 

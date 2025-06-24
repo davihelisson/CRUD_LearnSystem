@@ -4,24 +4,27 @@
  */
 package modelo;
 
-/**
- *
- * @author Fatec
- */
+
 public class Curso {   
     private int codigo;
     private String nome;
     private int cargaHoraria;
-    private boolean ativo;
-
-    public Curso(int codigo, String nome, int cargaHoraria, boolean ativo) {
-        this.codigo = codigo;
+    private String status;
+    private int quantidadeAlunos;
+    
+    
+    public Curso(int codigo, String nome, int cargaHoraria, String status, int quatidadeAlunos) {
+    	this.codigo = codigo;
         this.nome = nome;
         this.cargaHoraria = cargaHoraria;
-        this.ativo = ativo;
+        this.status = status;
+        this.quantidadeAlunos = quantidadeAlunos;
     }
-
-    public Curso() {}
+    
+    public Curso() {
+        this.status = "Ativo";
+        this.quantidadeAlunos = 0;
+    }
 
     public int getCodigo() {
         return codigo;
@@ -47,12 +50,33 @@ public class Curso {
         this.cargaHoraria = cargaHoraria;
     }
 
+    public String getStatus() {
+        return status;
+    }
+    
+    public void setStatus(String status) {
+    	this.status = status;
+    }
+
     public boolean isAtivo() {
-        return ativo;
+        return "Ativo".equalsIgnoreCase(status);
     }
 
     public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
+        this.status = ativo ? "Ativo" : "Inativo";
+    }
+    
+    public int getQuantidadeAlunos() {
+        return quantidadeAlunos;
+    }
+
+    public void setQuantidadeAlunos(int quantidadeAlunos) {
+        this.quantidadeAlunos = quantidadeAlunos;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Curso: %s (Código: %d), %d horas - %s", nome, codigo, cargaHoraria, status, quantidadeAlunos);
     }
     
 }

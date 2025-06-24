@@ -72,10 +72,18 @@ public class Aluno {
         return dataNascimento;
     }
 
-    public void setDataNascimento(String dataNascimento) {
+    public void setDataNascimento(java.sql.Date date) {
+    	if (date != null) {
+            this.dataNascimento = new Date(date.getTime());
+        } else {
+            throw new IllegalArgumentException("Data de nascimento não pode ser nula.");
+        }
+    }
+    
+    public void setDataNascimento(String data) {
         try {
             formatoData.setLenient(false);
-            this.dataNascimento = formatoData.parse(dataNascimento);
+            this.dataNascimento = formatoData.parse(data);
         } catch (ParseException e) {
             throw new IllegalArgumentException("Data de nascimento deve estar no formato dd/MM/yyyy.");
         }

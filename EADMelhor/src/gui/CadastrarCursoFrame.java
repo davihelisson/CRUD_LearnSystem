@@ -4,91 +4,80 @@
  */
 package gui;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-
 import dao.CursoDAO;
 import modelo.Curso;
 
-public class CadastrarCursoFrame extends javax.swing.JFrame {
+import javax.swing.*;
+import java.awt.*;
 
-    private JTextField txtCodigo;
-    private JTextField txtNome;
-    private JTextField txtCargaHoraria;
+public class CadastrarCursoFrame extends JFrame {
+    private JTextField txtCodigo, txtNome, txtCargaHoraria;
+    private JButton btnSalvar, btnCancelar;
+
+    private final CursoDAO cursoDAO = new CursoDAO();
 
     public CadastrarCursoFrame() {
-        setTitle("Cadastrar Curso ou Aluno");
-        setSize(400, 300);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setTitle("Cadastrar Curso");
+        setSize(400, 250);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        initComponents();
+    }
 
+    private void initComponents() {
         JPanel painel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel lblCodigo = new JLabel("Código:");
         JLabel lblNome = new JLabel("Nome:");
-        JLabel lblCargaHoraria = new JLabel("Carga Horária (horas):");
+        JLabel lblCargaHoraria = new JLabel("Carga Horária:");
 
-        txtCodigo = new JTextField(20);
+        txtCodigo = new JTextField(10);
         txtNome = new JTextField(20);
-        txtCargaHoraria = new JTextField(20);
+        txtCargaHoraria = new JTextField(10);
 
-        JButton btnConfirmar = new JButton("Confirmar");
-        JButton btnCancelar = new JButton("Cancelar");
+        btnSalvar = new JButton("Salvar");
+        btnCancelar = new JButton("Cancelar");
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.weightx = 0.0;
         painel.add(lblCodigo, gbc);
-
         gbc.gridx = 1;
-        gbc.weightx = 1.0;
         painel.add(txtCodigo, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.weightx = 0.0;
         painel.add(lblNome, gbc);
-
         gbc.gridx = 1;
-        gbc.weightx = 1.0;
         painel.add(txtNome, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        gbc.weightx = 0.0;
         painel.add(lblCargaHoraria, gbc);
-
         gbc.gridx = 1;
-        gbc.weightx = 1.0;
         painel.add(txtCargaHoraria, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
-        gbc.weightx = 0.0;
-        painel.add(btnConfirmar, gbc);
-
+        painel.add(btnSalvar, gbc);
         gbc.gridx = 1;
-        gbc.weightx = 0.0;
         painel.add(btnCancelar, gbc);
 
-        btnConfirmar.addActionListener(e -> confirmarCadastro());
-        btnCancelar.addActionListener(e -> dispose());
-
         add(painel);
+
+        btnSalvar.addActionListener(e -> salvarCurso());
+        btnCancelar.addActionListener(e -> dispose());
     }
 
-    private void confirmarCadastro() {
-        String codigo = txtCodigo.getText().trim();
+    private void salvarCurso() {
+        String codigoStr = txtCodigo.getText().trim();
         String nome = txtNome.getText().trim();
-        String carga = txtCargaHoraria.getText().trim();
+        String cargaStr = txtCargaHoraria.getText().trim();
 
-        if (codigo.isEmpty() || nome.isEmpty() || carga.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
+        if (codigoStr.isEmpty() || nome.isEmpty() || cargaStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Todos os campos são obrigatórios.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -96,58 +85,39 @@ public class CadastrarCursoFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "O nome deve ter no mínimo 3 caracteres.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
+        int codigo;
         int cargaHoraria;
         try {
-            cargaHoraria = Integer.parseInt(carga);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Carga horária deve ser um número válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+            codigo = Integer.parseInt(codigoStr);
+            cargaHoraria = Integer.parseInt(cargaStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Código e Carga Horária devem ser numéricos.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         if (cargaHoraria < 20) {
-            JOptionPane.showMessageDialog(this, "A carga horária deve ser de no mínimo 20 horas.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "A carga horária deve ser no mínimo 20.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        int cod = Integer.parseInt(txtCodigo.getText().trim());
-        
-        Curso curso = new Curso(cod, nome, cargaHoraria, true);
-        CursoDAO dao = new CursoDAO();
-        dao.adicionarCurso(curso);
 
-        JOptionPane.showMessageDialog(this, "Curso cadastrado com sucesso!\n(Código: " + cod + ", Nome: " + nome + ", Carga Horária: " + cargaHoraria + " horas)");
+        if (cursoDAO.existeCursoPorCodigo(codigo)) {
+            JOptionPane.showMessageDialog(this, "Já existe um curso com este código.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (cursoDAO.existeCursoPorNome(nome)) {
+            JOptionPane.showMessageDialog(this, "Já existe um curso com este nome.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Curso novoCurso = new Curso(); // status será "Ativo" por padrão
+        cursoDAO.adicionarCurso(novoCurso);
+
+        JOptionPane.showMessageDialog(this, "Curso cadastrado com sucesso.");
         dispose();
-    }
+    }    
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

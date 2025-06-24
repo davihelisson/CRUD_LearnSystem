@@ -1,0 +1,12 @@
+CPF	Nome	Email	Data de Nascimento
+12345678901	Jalym Rabei	eu@voce.com	Sun Nov 24 00:00:00 BRT 2024
+12345678902	Selton Caramelo	caramelo@ead.com	Tue Mar 12 00:00:00 BRT 1985
+12345678903	Silvester Panetone	silvestre@ead.com	Sat Dec 25 00:00:00 BRT 1976
+12345678904	Ellijah Food	food@ead.com	Wed Jul 04 00:00:00 BRT 1990
+12345678905	Chirs Pratto	pratto@ead.com	Sun Sep 18 00:00:00 BRT 1988
+12345678906	Kevin X Bacon	bacon@ead.com	Fri Feb 08 00:00:00 BRT 1980
+12345678907	Leonardo de Quatro Queijos	leo@ead.com	Sat Nov 14 00:00:00 BRST 1992
+12345678908	Morgan Fritas	fritas@ead.com	Fri May 23 00:00:00 BRT 1975
+12345678909	Raul Gil Jitso	gil@ead.com	Fri Apr 01 00:00:00 BRT 1983
+12345678910	Russel Corno	corno@ead.com	Thu Jun 29 00:00:00 BRT 1995
+98765432101	Volim Rabáh	nos@voce.com	Fri Nov 11 00:00:00 BRST 2011
